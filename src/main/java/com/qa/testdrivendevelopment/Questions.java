@@ -94,7 +94,7 @@ public class Questions {
 	 * For Example:
 	 * oddNum("1,2,3,4,5") → "1,3,5"
 	 * oddNum("2,4,6,8") → "null"
-	 * oddNum("23,48,52,57") → "23,57"
+	 * oddNum("23,48,52,57") → "23,57" ---- FAILING HERE :(
 	 */
 	public String oddNum(String allNums) {
 		StringBuilder oddnum = new StringBuilder();
@@ -248,18 +248,32 @@ public class Questions {
 	 * validCard("0123-4567-8901-2345") → False
 	 * validCard("401234567890123") → False
 	 * validCard("4012 3456 7890 1234") → False
-	 * validCard("4444-0123-4567-8901") → False
+	 * validCard("4444-0123-4567-8901") → False ----- FAILING HERE :(
 	 * validCard("4012345678901234") → True
 	 */
 	public boolean validCard(String cardNumber) {
-		String card = cardNumber;
+		String card = cardNumber.replaceAll("-", "");
+		System.out.println(card);
 		String pre1 = "4";
 		String pre2 = "5";
 		String pre3 = "6";
-		if (card.startsWith(pre1) || card.startsWith(pre2) || card.startsWith(pre3)) {
-			
-			
+
+		if (card.length() == 16 && card.startsWith(pre1) || card.startsWith(pre2) || card.startsWith(pre3)) {
+			for (int i = 16; i < card.length(); i--) {
+				int a = card.charAt(i);
+				int b = card.charAt(i - 1);
+				int c = card.charAt(i - 2);
+				int d = card.charAt(i - 3);
+				if (a == b && b == c && c != d) {
+					System.out.println("True");
+					return true;
+				}
+			}
+			System.out.println("True");
+			return true;
+		} else {
+			System.out.println("False");
+			return false;
 		}
-		return false;
 	}
 }
